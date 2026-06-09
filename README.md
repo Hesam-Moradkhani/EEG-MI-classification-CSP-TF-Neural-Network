@@ -4,7 +4,7 @@ Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue
 
 | **Aspect** | **Details** |
 |------------|-------------|
-| Dataset | BCI Competition IV-2a (Subjects A01, A02, A03, A05) |
+| Dataset | BCI Competition IV-2a (Subjects A01-A09) |
 | Classes | Left hand, Right hand, Foot, Tongue (4 classes) |
 | EEG Channels | 22 channels |
 | Trials per subject | 288 (4 classes × 72 trials) |
@@ -24,16 +24,20 @@ Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue
 
 ---
 
-## Key Results
+## Key Results Summary
 
 | Subject | Best Accuracy | Best Fold | Best Classifier |
 |:-------:|:-------------:|:---------:|:---------------:|
 | **A01T** | 60.7% | 67.2% | MLP |
-| **A02T** | **74.8%** | **82.8%** | MLP |
+| **A02T** | 74.8% | 82.8% | MLP |
 | **A03T** | 63.4% | 75.9% | XGBoost |
 | **A05T** | 60.9% | 67.2% | MLP |
+| **A06T** | 49.0% | 63.8% | MLP |
+| **A07T** | **77.8%** | **86.2%** | XGBoost |
+| **A08T** | 68.4% | 79.3% | MLP |
+| **A09T** | 42.8% | 48.3% | MLP |
 
-> **✅ MLP is the best classifier for mixed feature types (spatial + spectral + informational), achieving 82.8% best-fold accuracy**
+> **🏆 Best overall: Subject A07T with XGBoost (77.8% mean, 86.2% best fold)**
 
 ---
 
@@ -54,15 +58,15 @@ Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue
 - **SVM** - Support Vector Machine (RBF kernel)
 - **Random Forest** - Ensemble of decision trees
 - **XGBoost** - Gradient boosted trees
-- **MLP** - Multi-Layer Perceptron (3 hidden layers)
+- **MLP** - Multi-Layer Perceptron (2 hidden layers)
 
 ### 4. Validation
 - 10-fold ShuffleSplit cross-validation (80/20 train-test split)
-- Metrics: Accuracy, Precision (weighted), Recall (weighted)
+- Metric: Accuracy
 
 ---
 
-## Experimental Results
+## Detailed Experimental Results
 
 ### Subject A01T
 
@@ -112,63 +116,144 @@ Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue
 
 ---
 
-## Classifier Summary (All Subjects)
+### Subject A06T
 
-| Classifier | Mean Acc (4 subjects) | Best Fold Average |
-|------------|----------------------|-------------------|
-| **MLP** | **64.9%** | **72.4%** |
-| XGBoost | 62.2% | 67.7% |
-| LDA | 58.2% | 65.5% |
-| Random Forest | 56.2% | 66.4% |
-| SVM | 32.2% | 43.5% |
+| Classifier | Mean Acc | Std | Best Fold |
+|------------|----------|-----|-----------|
+| LDA | 44.5% | 5.7% | 53.4% |
+| SVM | 18.8% | 2.5% | 24.1% |
+| Random Forest | 36.4% | 4.7% | 43.1% |
+| XGBoost | 38.4% | 5.5% | 44.8% |
+| **MLP** | **49.0%** | 8.8% | **63.8%** |
+
+---
+
+### Subject A07T
+
+| Classifier | Mean Acc | Std | Best Fold |
+|------------|----------|-----|-----------|
+| LDA | 73.6% | 4.6% | 82.8% |
+| SVM | 24.8% | 7.3% | 39.7% |
+| Random Forest | 70.3% | 4.5% | 77.6% |
+| **XGBoost** | **77.8%** | 5.7% | **86.2%** |
+| MLP | 77.1% | 5.6% | 86.2% |
+
+---
+
+### Subject A08T
+
+| Classifier | Mean Acc | Std | Best Fold |
+|------------|----------|-----|-----------|
+| LDA | 62.8% | 6.0% | 74.1% |
+| SVM | 38.8% | 3.5% | 44.8% |
+| Random Forest | 55.3% | 5.1% | 63.8% |
+| XGBoost | 58.8% | 4.3% | 63.8% |
+| **MLP** | **68.4%** | 5.8% | **79.3%** |
+
+---
+
+### Subject A09T
+
+| Classifier | Mean Acc | Std | Best Fold |
+|------------|----------|-----|-----------|
+| LDA | 36.4% | 6.9% | 50.0% |
+| SVM | 22.1% | 5.5% | 34.5% |
+| Random Forest | 32.8% | 3.4% | 37.9% |
+| XGBoost | 35.3% | 5.4% | 44.8% |
+| **MLP** | **42.8%** | 3.9% | **48.3%** |
+
+---
+
+## Classifier Summary (All 8 Subjects)
+
+| Classifier | Mean Acc (8 subjects) | Best Fold Average | Subjects Won |
+|------------|----------------------|-------------------|--------------|
+| **MLP** | **61.4%** | **69.0%** | 5 (A01, A02, A05, A06, A08) |
+| **XGBoost** | **57.7%** | **65.1%** | 2 (A03, A07) |
+| LDA | 56.3% | 65.0% | 0 |
+| Random Forest | 53.0% | 60.8% | 0 |
+| SVM | 28.4% | 38.9% | 0 |
+
+> **✅ MLP wins on 5/8 subjects with 61.4% mean accuracy across all subjects**
 
 ---
 
 ## Performance by Subject Difficulty
 
-| Subject | Best Accuracy | Best Fold | Difficulty |
-|:-------:|:-------------:|:---------:|:----------:|
-| A02T | 74.8% | 82.8% | Easy |
-| A03T | 63.4% | 75.9% | Medium |
-| A05T | 60.9% | 67.2% | Hard |
-| A01T | 60.7% | 67.2% | Hard |
+| Subject | Best Accuracy | Best Fold | Best Classifier | Difficulty |
+|:-------:|:-------------:|:---------:|:---------------:|:----------:|
+| A07T | **77.8%** | **86.2%** | XGBoost | Very Easy |
+| A02T | 74.8% | 82.8% | MLP | Easy |
+| A08T | 68.4% | 79.3% | MLP | Medium-Easy |
+| A03T | 63.4% | 75.9% | XGBoost | Medium |
+| A01T | 60.7% | 67.2% | MLP | Medium-Hard |
+| A05T | 60.9% | 67.2% | MLP | Medium-Hard |
+| A06T | 49.0% | 63.8% | MLP | Hard |
+| A09T | 42.8% | 48.3% | MLP | Very Hard |
+
+---
+
+## Ranking of Subjects by Performance
+A07T ████████████████████████████████████ 77.8% (XGBoost)
+
+A02T ████████████████████████████████░░░░ 74.8% (MLP)
+
+A08T ████████████████████████████░░░░░░░░ 68.4% (MLP)
+
+A03T ██████████████████████████░░░░░░░░░░ 63.4% (XGBoost)
+
+A05T ████████████████████████░░░░░░░░░░░░ 60.9% (MLP)
+
+A01T ████████████████████████░░░░░░░░░░░░ 60.7% (MLP)
+
+A06T ████████████████░░░░░░░░░░░░░░░░░░░░ 49.0% (MLP)
+
+A09T ██████████████░░░░░░░░░░░░░░░░░░░░░░ 42.8% (MLP)
+
 
 ---
 
 ## Key Findings
 
-### 1. MLP is the Most Robust Classifier
-- Wins on **3/4 subjects** (A01, A02, A05)
-- Average accuracy: **64.9%** across all subjects
-- Handles heterogeneous feature types (spatial + spectral + entropy) effectively
+### 1. MLP is the Most Robust Classifier Overall
+- Wins on **5/8 subjects** (A01, A02, A05, A06, A08)
+- Average accuracy: **61.4%** across all 8 subjects
+- Best fold average: **69.0%**
+- Handles heterogeneous feature types effectively
 
-### 2. XGBoost is a Strong Contender
-- Wins on **A03T** (63.4% mean, 72.4% best fold)
-- Second-best overall average (62.2%)
+### 2. XGBoost Performs Well on Good Subjects
+- Wins on **A03T** (63.4%) and **A07T** (77.8% — best overall)
+- Second-best overall average (57.7%)
 - More interpretable than MLP
 
-### 3. SVM Fails on This Feature Set
-- Consistently poor performance (32.2% average — near chance level of 25%)
+### 3. LDA is Consistent but Not Top-Performing
+- Third place overall (56.3% mean)
+- Never wins best classifier for any subject
+- Works better with pure CSP (as shown in previous project)
+
+### 4. SVM Fails Completely on This Feature Set
+- Consistently poor performance (28.4% average — barely above chance at 25%)
 - RBF kernel cannot handle high-dimensional, heterogeneous feature space
 
-### 4. LDA Underperforms Compared to Pure CSP
-- LDA assumes Gaussianity — alpha power and entropy may violate this assumption
-
-### 5. High Subject Variability
-- Best subject (A02T): **74.8%** mean, **82.8%** best fold
-- Worst subject (A05T): **60.9%** mean, **67.2%** best fold
+### 5. Extreme Subject Variability
+| Category | Subjects | Mean Accuracy Range |
+|----------|----------|---------------------|
+| High performers | A07, A02, A08 | 68-78% |
+| Medium performers | A03, A01, A05 | 60-64% |
+| Low performers | A06, A09 | 43-49% |
 
 ---
 
-## Comparison: Pure CSP vs. This Approach
+## Statistical Summary
 
-| Subject | Pure CSP + LDA | CSP + Alpha + Entropy + MLP | Difference |
-|:-------:|:--------------:|:---------------------------:|:----------:|
-| A01 | **63.6%** | 60.7% | -2.9% |
-| A02 | 74.5% | **74.8%** | +0.3% |
-| **Average** | **69.1%** | 67.8% | -1.3% |
-
-> Pure CSP + LDA remains more consistent, but MLP with spectral/entropy features **matches or exceeds** on good subjects.
+| Metric | Value |
+|--------|-------|
+| Total subjects | 8 |
+| Best overall accuracy | 77.8% (A07T, XGBoost) |
+| Best overall fold | 86.2% (A07T, XGBoost/MLP) |
+| Worst subject accuracy | 42.8% (A09T, MLP) |
+| MLP win rate | 62.5% (5/8 subjects) |
+| XGBoost win rate | 25.0% (2/8 subjects) |
 
 ---
 
@@ -176,11 +261,9 @@ Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/motor-imagery-csp-spectral-entropy.git
+git clone https://github.com/Hesam-Moradkhani/EEG-MI-classification-CSP-TF-Neural-Network.git
 cd motor-imagery-csp-spectral-entropy
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run main pipeline
-python main.py --subject A02T
