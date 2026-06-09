@@ -1,4 +1,4 @@
-# Motor Imagery Classification using CSP + Spectral/Entropy Features
+# Motor Imagery Classification using CSP+Spectral/Entropy Features
 
 Classification of **4-class motor imagery** (Left Hand, Right Hand, Foot, Tongue) using EEG data from the **BCI Competition IV-2a dataset**. This project extends traditional CSP by incorporating **alpha band power (8-13 Hz)** and **Shannon entropy** as complementary features, then compares **LDA, SVM, Random Forest, XGBoost, and MLP** classifiers.
 
